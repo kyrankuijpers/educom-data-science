@@ -340,15 +340,79 @@ Schrijf een query/verzin een oplossing die de data uit world-population.json omz
 
 ##### Command 
 ```
-This is cmd code
+jq 'map({
+    rank: .rank,
+    cca3: .cca3,
+    country: .country,
+    capital: .capital,
+    continent: .continent, 
+    population: 
+        [
+          {year: 2022, population: .population_2022}, 
+          {year: 2020, population: .population_2020},
+          {year: 2015, population: .population_2015},
+          {year: 2010, population: .population_2010},
+          {year: 2000, population: .population_2000},
+          {year: 1990, population: .population_1990},
+          {year: 1980, population: .population_1980},
+          {year: 1970, population: .population_1970}
+        ],
+    area_km2: .area_km2,
+    population_density: .population_density,
+    population_growth_rate: .population_growth_rate,
+    percentage_world_population: .percentage_world_population
+    })' world-population.json > DS-jq-opdracht-7-output.json
 ```
 ##### JSON 
 ```json
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
+[
+  {
+    "rank": 36,
+    "cca3": "AFG",
+    "country": "Afghanistan",
+    "capital": "Kabul",
+    "continent": "Asia",
+    "population": [
+      {
+        "year": 2022,
+        "population": 41128771
+      },
+      {
+        "year": 2020,
+        "population": 38972230
+      },
+      {
+        "year": 2015,
+        "population": 33753499
+      },
+      {
+        "year": 2010,
+        "population": 28189672
+      },
+      {
+        "year": 2000,
+        "population": 19542982
+      },
+      {
+        "year": 1990,
+        "population": 10694796
+      },
+      {
+        "year": 1980,
+        "population": 12486631
+      },
+      {
+        "year": 1970,
+        "population": 10752971
+      }
+    ],
+    "area_km2": 652230,
+    "population_density": 63.0587,
+    "population_growth_rate": 1.0257,
+    "percentage_world_population": 0.52
+  },
+  {
+    ... etc
 ```
 
 ### Opdracht 8
