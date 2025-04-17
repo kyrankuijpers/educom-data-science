@@ -252,8 +252,7 @@ Gebruik jq om een JSON-file naar een CSV-file om te zetten. Exporteer de resulta
 ##### Command 
 ```
 jq -r '(.[0] | keys_unsorted) as $keys 
-| $keys, map([.country, .density_1970]).[] | @csv'
- DS-jq-opdracht-1-output.json > DS-jq-opdracht-1-output.csv
+| $keys, map([.country, .density_1970]).[] | @csv' DS-jq-opdracht-1-output.json > DS-jq-opdracht-1-output.csv
 ```
 ##### CSV 
 ```
