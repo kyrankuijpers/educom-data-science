@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPerson>
+  <Person id="1">
+    <Name>John Doe</Name>
+    <Age>30</Age>
+    <City>New York</City>
+  </Person>
+  <Person id="2">
+    <Name>Jane Smith</Name>
+    <Age>25</Age>
+    <City>Los Angeles</City>
+  </Person>
+  <Person id="3">
+    <Name>Sam Brown</Name>
+    <Age>40</Age>
+    <City>San Francisco</City>
+  </Person>
+</ArrayOfPerson>
