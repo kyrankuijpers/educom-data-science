@@ -2,7 +2,10 @@ import sys, csv, os
 import xml.etree.ElementTree as ElementTree
 from json import dump
 from typing import List
-import person as p
+
+sys.path.append("C:\\xampp\\htdocs\\educom-data-science\\python\\modules")
+
+from myclass import person as p
 
 def get_path() -> str:
     try:

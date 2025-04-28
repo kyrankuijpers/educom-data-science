@@ -1,7 +1,10 @@
 import sys, os, csv 
-import person as p
 import xml.etree.ElementTree as ElementTree
 from json import load, JSONDecodeError
+
+sys.path.append("C:\\xampp\\htdocs\\educom-data-science\\python\\modules")
+
+from myclass import person as p
 
 def get_path() -> str:
     try:
@@ -82,6 +85,7 @@ def main():
     data = read_file(path)
     objects = objectify(data)
     print_objects(objects)
+    
 
     return
     
