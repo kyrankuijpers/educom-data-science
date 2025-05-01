@@ -5,7 +5,7 @@ from typing import List
 
 sys.path.append("C:\\xampp\\htdocs\\educom-data-science\\python\\modules")
 
-from myclass import person as p
+from e_class import person as p
 
 def get_path() -> str:
     try:
@@ -92,7 +92,7 @@ def write_json(file_path: str, items: list) -> bool:
 
 def main():
     
-    persons = [p.Person(1, "Reese", 51, "Brooklyn"), p.Person(2, "Steve", 49, "Saskatchewan")]
+    persons = [p.Person(id=1, name="Reese", age=51, city="Brooklyn"), p.Person(id=2, name="Steve", age=49, city="Saskatchewan")]
     
     file_path = get_path()
     

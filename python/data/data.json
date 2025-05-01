@@ -1,5 +1,8 @@
 [
     { "id": 1, "name": "John Doe", "age": 30, "city": "New York" },
     { "id": 2, "name": "Jane Smith", "age": 25, "city": "Los Angeles" },
-    { "id": 3, "name": "Sam Brown", "age": 40, "city": "San Francisco" }
+    { "id": 3, "name": "Sam Brown", "age": 40, "city": "San Francisco" },
+    { "id": 4, "name": "Kyran Kuijpers", "age": 30, "city": "New York" },
+    { "id": 5, "name": "Richard Dean Anderson", "age": 25, "city": "Los Angeles" },
+    { "id": 6, "name": "Issa Rae", "age": 40, "city": "San Francisco" }
 ]

@@ -4,7 +4,7 @@ from json import load, JSONDecodeError
 
 sys.path.append("C:\\xampp\\htdocs\\educom-data-science\\python\\modules")
 
-from myclass import person as p
+from e_class import person as p
 
 def get_path() -> str:
     try:
@@ -67,7 +67,7 @@ def objectify(data: list[dict]) -> list:
     objects = []    
 
     for row in data:
-        my_object = p.Person(row['id'], row['name'], row['age'], row['city'])
+        my_object = p.Person(id=row['id'], name=row['name'], age=row['age'], city=row['city'])
         objects.append(my_object)
         
     return objects
