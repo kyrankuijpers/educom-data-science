@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-import sys
-import mysql.connector 
-from typing import List
-
-sys.path.append("C:\\xampp\\htdocs\\educom-data-science\\python\\modules")
-
 import e_io
 from e_mysql.connect import get_connection
 from e_class import person as p
@@ -73,6 +66,48 @@ def insert_object_to_db(instance: object, db_connection) -> object:
 
     return affected_rows
 
+def update_object_by_id(instance: object, db_connection):
+
+    db_cursor = db_connection.cursor()
+    
+    class_name = type(instance).__name__
+    table_name = class_name.lower()
+
+    if instance.id:
+
+        values = list(instance.__dict__.values())   
+        keys_and_placeholders = []
+        set_string = ""
+        keys = instance.__dict__.keys()
+        
+        for key in keys:
+            
+            key_and_placeholder = f"{key}=%s"
+            keys_and_placeholders.append(key_and_placeholder)
+        
+        set_string = ", ".join(keys_and_placeholders)
+
+        query = f"UPDATE {table_name} SET {set_string} WHERE id={instance.id};"
+        
+        db_cursor.execute(query, values)      
+        db_connection.commit()               
+        affected_rows = db_cursor.rowcount   
+        print(affected_rows)
+        
+        if(affected_rows > 0):
+            result = f"Success: updated {affected_rows} number of rows"
+        elif(affected_rows == 0):
+            result = "Exception: did not update any rows. id may not exist or values may be identical"
+        elif(affected_rows == -1):
+            result = "Unspecified error with rowcount -1"
+        
+        db_cursor.close()
+
+    else:        
+        result = "Error: need id to update row in database"
+
+    return result 
+
 def insert_persons_from_json(db_connection, file_path):
     
     persons_dict = e_io.read_data.read_file(file_path)
@@ -93,10 +128,12 @@ def insert_persons_from_json(db_connection, file_path):
 def main():
     
     db_connection = get_connection()
-    file_path = e_io.path.get_path()
+    #file_path = e_io.path.get_path()
     
-    person = p.Person("annie", 11, 'ede', 101)    
-    affected_rows = insert_object_to_db(person, db_connection)
+    #insert_persons_from_json(db_connection, file_path)
+    
+    #person = p.Person("annie", 11, 'eden', 124)    
+    #update_object_by_id(person, db_connection))
 
     return
 

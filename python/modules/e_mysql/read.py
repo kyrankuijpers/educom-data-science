@@ -33,17 +33,27 @@ def get_data_as_object_list(db_connection, table) -> List[object]:
     
     return objects
 
-
+def read_all_from_table(db_connection, table) -> List[dict]:
+    # Door buffered=True kunnen we door de resultaten heen loopen zonder eerst de hele resultatenset op te halen via db_cursor.fetchall()
+    db_cursor = db_connection.cursor(buffered=True, dictionary=True)
+    
+    query = f"SELECT * FROM `{table}`"
+    
+    db_cursor.execute(query)      
+    results = [row for row in db_cursor]
+    db_cursor.close()
+    
+    return results
 
 def main():
     
     db_connection = get_connection()
-    data = get_data_as_object_list(db_connection, "person")
-    
-    for instance in data:
-        print(instance.__dict__) 
+    objects = get_data_as_object_list(db_connection, "person")
+    dicts = read_all_from_table(get_connection(), "person")
     
     return
 
 if __name__ == "__main__":
     main()
+
+
