@@ -1,8 +1,13 @@
-import duckdb
+import duckdb, sys
+from datetime import datetime as dt
 import rates.exchange_rate, rates.api, rates.currency
 
-db_path = "C:\\xampp\\htdocs\\educom-data-science\\python\\rates.duckdb"
-con = duckdb.connect(db_path)
+def is_file_locked(path):
+    try:
+        with open(path, 'a'):
+            return False
+    except IOError:
+        return True
 
 def save_rates_from_api(con):
     
@@ -34,6 +39,14 @@ def save_rates_from_api(con):
 
     return
 
-save_rates_from_api(con)
+db_path = "C:\\xampp\\htdocs\\educom-data-science\\python\\rates.duckdb"
 
-con.close()
+if is_file_locked(db_path):
+    runtime = dt.now()
+    print(f"\nDatabase file {db_path} is currently locked. Exiting at {runtime}.")
+    sys.exit(1)
+
+with duckdb.connect(db_path) as con:
+    runtime = dt.now()
+    print(f"\nConnected and running at {runtime}.")
+    save_rates_from_api(con)

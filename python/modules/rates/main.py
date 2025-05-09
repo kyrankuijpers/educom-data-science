@@ -1,10 +1,7 @@
 import duckdb, os
-import rates.api, rates.currency, rates.exchange_rate 
+import rates.api, rates.currency, rates.exchange_rate, rates.plot_rates 
 
 db_path = "C:\\xampp\\htdocs\\educom-data-science\\python\\rates.duckdb"
-
-custom_currencies = []
-con = duckdb.connect(db_path)
 
 ##### INIT DB
 
@@ -17,9 +14,12 @@ def create_tables(con):
     return
 
 ##### VIEW
+with duckdb.connect(db_path) as con:
 
-con.sql('SELECT * FROM exchange_rate').show()
-
-##### CLOSE
-
-con.close()
+    con.sql("""SELECT * FROM exchange_rate
+            """).show()
+    
+    codes = ['USD', 'GBP', 'RUB', 'CNY', 'AUD']
+    result = rates.exchange_rate.get_rates_in_period(con, codes, '2025-05-09', '2025-05-09')
+    
+rates.plot_rates.plot_rates_changes(result)
