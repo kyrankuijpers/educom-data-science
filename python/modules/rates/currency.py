@@ -44,8 +44,8 @@ def populate_currency(con):
 
 def main():
     
-    con = duckdb.connect("rates.duckdb")
-
+    db_path = "C:\\xampp\\htdocs\\educom-data-science\\python\\rates.duckdb"
+    con = duckdb.connect(db_path)
 
     result2 = get_currency_by_code(con, 'EUR')
     print(result2)
