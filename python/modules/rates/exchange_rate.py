@@ -33,43 +33,46 @@ def insert_rates(con, rate_rows):
 
     return
 
-def save_rates_from_api(con):
+def get_rates_in_period(con, codes, startdate, enddate):
     
-    ##### GET DATA FROM API 
-    data = rates.api.get_rates_from_api()
+    result = {}
 
-    ##### RESTRUCTURE DATA 
-    if data:
-        
-        rate_rows = []
-        
-        timestamp = data['timestamp']
-        date = data['date']
-        
-        base_code = data['base']
-        base_info = rates.currency.get_currency_by_code(con, 'EUR')  
-        base_id = base_info['id']  
-        
-        for code, rate in data['rates'].items():
-            currency_info = rates.currency.get_currency_by_code(con, code)  
-            currency_id = currency_info['id'] 
+    for code in codes:
             
-            rate_rows.append([currency_id, base_id, rate, date, timestamp])
-
-    ##### SAVE API DATA TO DB
-    if rate_rows:
-        
-        rates.exchange_rate.insert_rates(con, rate_rows)
-
-    return
-
-def main():
+        query = """
+                SELECT * FROM exchange_rate
+                INNER JOIN currency 
+                ON exchange_rate.currency_id = currency.id
+                WHERE DATE BETWEEN ? AND ? AND code = ?
+                """                    
+        code_rates_df = con.sql(query, params=(startdate, enddate, code)).fetchdf()
     
-    con = duckdb.connect("rates.duckdb")
-    con.sql("SELECT * FROM exchange_rate").show()
-    con.close()
+        code_rates = code_rates_df.to_dict(orient="records")
+        result[code] = code_rates   
     
-    return
+    return result
 
-if __name__ == "__main__":
-    main()
+def get_rates_with_currency(con, codes):
+    
+    result = {}
+
+    for code in codes:
+            
+        query = """SELECT * FROM exchange_rate
+                    INNER JOIN currency 
+                    ON exchange_rate.currency_id = currency.id
+                    WHERE code = ?
+                """
+                    
+        code_rates_df = con.sql(query, params=(code,)).fetchdf()
+    
+        code_rates = code_rates_df.to_dict(orient="records")
+        result[code] = code_rates
+    
+    return result
+
+    
+
+    
+
+
