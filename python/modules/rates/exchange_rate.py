@@ -71,6 +71,14 @@ def get_rates_with_currency(con, codes):
     
     return result
 
+def show_rates(con):
+    
+    con.sql(f"""
+        SELECT * FROM exchange_rate
+        """).show()
+        
+    return 
+
     
 
     

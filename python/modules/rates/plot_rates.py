@@ -75,8 +75,8 @@ def main():
      
     with duckdb.connect(db_path) as con:
     
-        codes = ['USD', 'GBP', 'RUB', 'CNY']
-        result = rat.get_rates_in_period(con, codes, '2025-05-08', '2025-05-09')
+        codes = ['USD', 'BTC', 'ETH', 'CNY']
+        result = rat.get_rates_in_period(con, codes, '2025-05-08', '2025-05-12')
     
     plot_rates_changes(result)
 
