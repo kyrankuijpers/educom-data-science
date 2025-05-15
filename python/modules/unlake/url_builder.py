@@ -42,5 +42,21 @@ def build_download_url(mart_id, data_filter):
     
     return url
 
+def get_data_filters(list_of_dicts, data_filters): 
 
+    for node_dict in list_of_dicts: #toplayer list of dicts
+           
+        if node_dict['childNodes']: #possible list of children
+            
+            childNodes = node_dict['childNodes']
+            
+            #repeat until no childnodes, then select data filter
+            get_data_filters(childNodes, data_filters)
+            
+        else:
+            data_filter = node_dict['dataFilter']
+            data_filters.append(data_filter)
 
+    return data_filters
+
+       
